@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goodsMapper">
+<sql id = "basecolumn">
+	GOODS_NUM, USER_ID, GOODS_NAME, GOODS_PRICE, GOODS_CONTENT, GOODS_IMAGE, READ_COUNT, GOODS_REGISTER, IP_ADDR
+</sql>
+<insert id="goodsInsert" parameterType="model.GoodsDTO">
+	insert into goods(<include refid = "basecolumn"/>) 
+	values(#{goodsNum}, #{userId}, #{goodsName}, #{goodsPrice}, #{goodsContent},
+	#{goodsImage}, 0, sysdate, #{ipAddr})
+</insert>
+<select id="getGoodsList" parameterType="model.GoodsDTO" resultType="model.GoodsDTO">
+	select *
+		from(select rownum rn, <include refid = "basecolumn"/>	
+			from(select <include refid = "basecolumn"/> 
+				from goods
+				order by goods_register desc))
+		<where>
+			<if test="startEndPageDTO != null">
+				rn between #{startEndPageDTO.startPage} and #{startEndPageDTO.endPage} 
+			</if>
+		</where>
+</select>
+<select id="getGoodsCount" resultType="int">
+	select count(*) from goods
+</select>
+</mapper>
