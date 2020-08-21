@@ -35,9 +35,7 @@ public class LibBoardModifyPro {
 		if(list != null) {
 			for(FileInfo fi : list) {
 				lib.setOriginalFileName(lib.getOriginalFileName().replace(fi.getOriginalFileName()+"`", ""));
-				System.out.println("org : "+lib.getOriginalFileName());
 				lib.setStoreFileName(lib.getStoreFileName().replace(fi.getStoreFileName()+"`", ""));
-				System.out.println("str : "+lib.getStoreFileName());
 				lib.setFileSize(lib.getFileSize().replace(fi.getFileSize()+"`", ""));
 				
 			}

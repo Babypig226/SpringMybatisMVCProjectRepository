@@ -6,7 +6,12 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        ">
 	<bean class="controller.goods.GoodsController"/>
+	<bean class="controller.goods.CartController"/>
 	<bean id = "goodsWriteService" class="service.goods.GoodsWriteService"/>
 	<bean id = "goodsListService" class="service.goods.GoodsListService"/>
+	<bean id = "goodsDetailService" class="service.goods.GoodsDetailService"/>
+	<bean id = "goodsCartdService" class="service.goods.GoodsCartService"/>
+	<bean id = "wishlistService" class="service.goods.WishlistService"/>
+	<bean id = "goodsDelService" class="service.goods.GoodsDelService"/>
 	<bean id = "goodsRepository" class="repository.GoodsRepository"/>
 </beans>

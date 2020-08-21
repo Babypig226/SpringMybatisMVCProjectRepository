@@ -1,7 +1,6 @@
 package controller.goods;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import command.GoodsCommand;
+import service.goods.GoodsDetailService;
 import service.goods.GoodsListService;
 import service.goods.GoodsWriteService;
 import validator.GoodsCommandValidate;
@@ -23,6 +23,8 @@ public class GoodsController {
 	GoodsWriteService goodsWriteService;
 	@Autowired
 	GoodsListService goodsListService;
+	@Autowired
+	GoodsDetailService goodsDetailService;
 	@RequestMapping("goodsList")
 	public String goodsList(@RequestParam(value = "page", defaultValue = "1")Integer page, Model model) {
 		goodsListService.getGoodsList(model, page);
@@ -41,4 +43,11 @@ public class GoodsController {
 		goodsWriteService.goodsWrite(goodsCommand, request);
 		return "redirect:/gd/goodsList";
 	}
+	@RequestMapping("goodsDetail")
+	public String goodsDetail(@RequestParam(value = "goodsNum")String goodsNum, Model model) {
+		goodsDetailService.getGoodsDetail(goodsNum, model);
+		return "goodsView/goodsDetail";
+	}
+
+	
 }

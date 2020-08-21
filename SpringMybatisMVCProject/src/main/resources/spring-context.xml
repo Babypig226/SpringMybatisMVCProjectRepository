@@ -41,6 +41,10 @@
 				<mvc:mapping path="/mem/**"/>
 				<bean class = "interceptor.AuthCheckInterceptor"/>
 			</mvc:interceptor>
+			<mvc:interceptor>
+				<mvc:mapping path="cart"/>
+				<bean class = "interceptor.AuthCheckInterceptor"/>
+			</mvc:interceptor>
 		</mvc:interceptors>
 		<!-- 암호화 -->
 		<bean id="bcryptPasswordEncoder " 

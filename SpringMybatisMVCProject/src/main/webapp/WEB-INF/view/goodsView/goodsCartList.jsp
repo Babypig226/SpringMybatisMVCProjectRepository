@@ -6,20 +6,39 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src = "http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src = "js/jquery.form.js"></script>
 <script type="text/javascript">
 function checkQty(num, qty){
 	if(qty > 1){
-		location.href="goodsCartQtyDown.gd?goodsNum="+num;
+		location.href="goodsCartQtyDown?cartNum="+num;
 	}else{
 		return false;
 	}
 }
+function goodsCartAdd(goodsNum){
+	$.ajax({
+		type : "post",
+		url : "<c:url value = '/cart/goodsCartAdd'/>",
+		dataType : "text",
+		data : {"goodsNum" : goodsNum},
+		success : function(){
+					location.href = "<c:url value = '/cart/goodsCartList'/>";				
+		},
+		error : function(){
+			alert("error alert");
+			return;
+		}
+			
+	});
+}
 </script>
 </head>
 <body>
-<form action="goodsCartRemove.gd" method="post" name="frm">
-<table align="center" width="600" border="1">
-	<tr align="center" bgcolor="orange">
+<form action="goodsCartRemove" method="post" name="frm">
+<table align="center" width="600" >
+	<caption>${cartList[0].userId}님의 장바구니</caption>
+	<tr align="center" bgcolor="#F2E0F7">
 		<td>번호	</td>
 		<td>상품이미지</td>
 		<td>상품명</td>
@@ -30,7 +49,7 @@ function checkQty(num, qty){
 		</td>
 	</tr>
 <c:forEach items="${cartList }" var="dto" varStatus="cnt">
-	<tr align="center" bgcolor="orange">
+	<tr align="center" >
 		<td>${cnt.count }</td>
 		<td><img src = "../goodsView/upload/${dto.goodsImage }" 
 					width="30"/>
@@ -40,9 +59,9 @@ function checkQty(num, qty){
 			<fmt:formatNumber value="${dto.goodsPrice }" 
 										type="currency"/>
 		</td>
-		<td><a href="goodsCartAdd.gd?goodsNum=${dto.goodsNum }"> + </a> 
+		<td><a href="javascript:goodsCartAdd(${dto.goodsNum })"> + </a> 
 		 ${dto.qty }
-		<a href="javascript:checkQty('${dto.goodsNum }','${dto.qty }');" > - </a></td>
+		<a href="javascript:checkQty('${dto.cartNum }','${dto.qty }');" > - </a></td>
 		<td align="center">
 		<input type="checkbox" name="delete" value="${dto.cartNum }" />
 		</td>
@@ -50,17 +69,21 @@ function checkQty(num, qty){
 </c:forEach>
 </table>
 </form>
-<table align="center" width="600" border="0">
-	<tr align="center" bgcolor="yellow">
+<table align="center" width="600" >
+	<tr align="center" bgcolor="#F2E0F7">
 		<td align="right" colspan="6">
-		<font color ="gray" size="5">
+		<font color ="gray" size="3">
 			총 결제금액 :
-			<fmt:formatNumber value="${cartList[0].sumTotalPrice }"
+			<fmt:formatNumber value="${sumTP}"
 				type="currency"/></font>
-		<font color ="black" size="5">원</font>
+		<font color ="black" size="3">원</font>
+		</td>
+	</tr>
+	<tr>
+		<td align = "right" colspan = "6">
+			<a href="<c:url value = '/gd/goodsList'/>" >목록으로 가기</a>
 		</td>
 	</tr>
 </table>
-<a href="goodsList.gd" >목록으로 가기</a>
 </body>
 </html>

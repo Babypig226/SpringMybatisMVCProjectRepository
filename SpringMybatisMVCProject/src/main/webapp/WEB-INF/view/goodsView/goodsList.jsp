@@ -8,21 +8,24 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div><a href="goodsCartList.gd" >장바구니 가기</a></div>
-<table width=80% border="1" cellpadding="0" cellspacing="0" >
+<div>
+	<a href="<c:url value = '/cart/goodsCartList'/>" >장바구니 가기</a>
+	<a href="<c:url value = '/cart/wishList'/>" >관심상품 가기</a>
+</div>
+<table width=50% cellpadding="0" cellspacing="0" align = "center">
+ 	<caption>상품리스트</caption>
 	<tr align="center" valign="middle">
-		<td colspan="3">상품리스트</td>
-		<td align=right>
+		<td colspan="4" align=right>
 			<font size=2>상품 개수 : ${count }</font>
 		</td>
 	</tr>
 	<tr><td>번호</td><td>이미지</td><td>상품명</td><td>가격</td></tr>
 <c:forEach items="${list }" var="dto" varStatus="cnt">
 	<tr><td  width=10% >
-			<a href="goodsDetail.gd?goodsNum=${dto.goodsNum }">
+			<a href="goodsDetail?goodsNum=${dto.goodsNum }">
 			${dto.goodsNum }</a>
 		</td>
-	    <td  width=40%>
+	    <td width = "20%">
 		<c:forTokens items="${dto.goodsImage}" delims="`" var = "i" begin = "0" end = "0">			
 	    <img width="50"	src="../goodsView/upload/${i}" />
 		</c:forTokens>
@@ -33,10 +36,8 @@
 	    					type="currency"/>
 	    </td></tr>
 </c:forEach>
-</table>
-<table width=80% >
 <tr>
-	<td align="center">
+	<td align="center" colspan = "4">
 <%@ include file="../include/includePage.jsp" %>
 	</td>
 </tr>
